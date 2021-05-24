@@ -1,0 +1,74 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Adding Jenkins Repo...
+      yum_repository:
+        name: jenkins
+        description: jenkins repository
+        baseurl: http://pkg.jenkins.io/redhat-stable/
+        gpgkey: http://pkg.jenkins.io/redhat-stable/jenkins.io.key
+        gpgcheck: yes
+
+    - name: Adding Docker Repo...
+      yum_repository:
+        name: docker
+        baseurl: http://download.docker.com/linux/centos/7/x86_64/stable/
+        description: docker repository
+        gpgcheck: no
+
+    - name: Installing Required Java
+      yum:
+        name: java-11-openjdk.x86_64
+        state: present
+
+    - name: Installing Docker...
+      command: "sudo yum install docker-ce --nobest -y"
+
+    - name: Starting Docker Service...
+      service:
+        name: docker
+        state: started
+
+    - name: Installing Jenkins...
+      yum:
+        name: jenkins
+        state: present
+
+    - name: Starting Jenkins Service...
+      service:
+        name: jenkins
+        state: started
+
+    - name: Jenkins password...
+      command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+      register: x
+
+    - name: ansible.cfg file
+      debug:
+        var: x.stdout
+
+    - name: Installing eksctl command...
+      get_url:
+        url: https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_linux_amd64.tar.gz
+        dest: ./eksctl.tar.gz
+
+    - name: Configuring eksctl...
+      unarchive:
+        src: ./eksctl.tar.gz
+        dest: /usr/local/bin
+        mode: 777
+
+    - name: Adding Kubernetes Repo
+      yum_repository:
+        name: Kubernetes
+        description: k8s repo
+        baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+        enabled: yes
+        gpgcheck: yes
+        repo_gpgcheck: yes
+        gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+    - name: Installing kubectl
+      yum:
+        name: kubectl
+        state: present
