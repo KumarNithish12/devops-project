@@ -52,11 +52,13 @@
         src: https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_linux_amd64.tar.gz
         dest: /usr/local/bin/
         mode: 777
+        remote_src: yes
 
     - name: Downloading awscli...
       unarchive:
         src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
         dest: /home/ec2-user
+        remote_src: yes
         
     - name: Installing awscli...
       command: sudo /home/ec2-user/aws/install
