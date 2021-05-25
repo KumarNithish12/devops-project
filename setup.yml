@@ -46,26 +46,16 @@
     - name: Password
       debug:
         var: x.stdout
-
-    - name: Installing eksctl command...
-      get_url:
-        url: https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_linux_amd64.tar.gz
-        dest: ./eksctl.tar.gz
         
-    - name: Configuring eksctl...
+    - name: Installing eksctl...
       unarchive:
-        src: ./eksctl.tar.gz
+        src: https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_linux_amd64.tar.gz
         dest: /usr/local/bin/
         mode: 777
-        
-    - name: Downloading aws cli command...
-      get_url:
-        url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-        dest: ./awscliv2.zip
 
-    - name: Configuring eksctl...
+    - name: Downloading awscli...
       unarchive:
-        src: ./awscliv2.zip
+        src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
         dest: .
         
     - name: Installing awscli...
