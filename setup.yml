@@ -61,7 +61,7 @@
         remote_src: yes
         
     - name: Installing awscli...
-      command: sudo /home/ec2-user/aws/install
+      command: sudo /home/ec2-user/aws/./install
 
     - name: Adding Kubernetes Repo
       yum_repository:
