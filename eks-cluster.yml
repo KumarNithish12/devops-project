@@ -15,7 +15,7 @@ nodeGroups:
   - name: nodegrp-mixed
     minSize: 1
     maxSize: 5
-    instanceDistribution: 
+    instancesDistribution: 
       maxPrice: 0.017
       instanceTypes: [ "t3.small" ]
       onDemandBaseCapacity: 0
