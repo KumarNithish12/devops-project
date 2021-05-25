@@ -56,10 +56,10 @@
     - name: Downloading awscli...
       unarchive:
         src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-        dest: .
+        dest: /home/ec2-user
         
     - name: Installing awscli...
-      command: sudo ./aws/install
+      command: sudo /home/ec2-user/aws/install
 
     - name: Adding Kubernetes Repo
       yum_repository:
