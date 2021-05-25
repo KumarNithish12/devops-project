@@ -39,11 +39,11 @@
         name: jenkins
         state: started
 
-    - name: Jenkins password...
+    - name: Fetching Jenkins password...
       command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword
       register: x
 
-    - name: ansible.cfg file
+    - name: Password
       debug:
         var: x.stdout
 
