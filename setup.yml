@@ -38,14 +38,6 @@
       service:
         name: jenkins
         state: started
-
-    - name: Fetching Jenkins password...
-      command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-      register: x
-
-    - name: Password
-      debug:
-        var: x.stdout
         
     - name: Installing eksctl...
       unarchive:
@@ -77,3 +69,11 @@
       yum:
         name: kubectl
         state: present
+        
+    - name: Fetching Jenkins password...
+      command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+      register: x
+
+    - name: Password
+      debug:
+        var: x.stdout
